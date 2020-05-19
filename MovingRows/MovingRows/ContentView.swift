@@ -9,8 +9,22 @@
 import SwiftUI
 
 struct ContentView: View {
+    @State var items = ["Item #1", "Item #2", "Item #3", "Item #4"]
+
+
     var body: some View {
-        Text("Hello, World!")
+        NavigationView {
+            List {
+                ForEach(items, id: \.self) { item in
+                    Text(item)
+                }
+                .onMove { (indexSet, offset) in
+                    self.items.move(fromOffsets: indexSet, toOffset: offset)
+                }
+            }
+            .navigationBarTitle(Text("My Items"))
+            .navigationBarItems(trailing: EditButton())
+        }
     }
 }
 
