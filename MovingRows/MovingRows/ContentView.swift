@@ -33,13 +33,6 @@ struct ContentView: View {
                 .onMove { (indexSet, destination) in
                      self.users.move(fromOffsets: indexSet, toOffset: destination)
                 }
-
-//                .onDelete(perform: { (offset: IndexSet) in
-//                    guard let firstIndexSet = offset.first else {
-//                        return
-//                    }
-//                    self.items.remove(at: firstIndexSet)
-//                })
             }
             .navigationBarItems(trailing: EditButton())
             .navigationBarTitle("Move rows")
