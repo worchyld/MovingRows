@@ -8,7 +8,7 @@
 
 import SwiftUI
 
-struct User: Hashable {
+struct User : Identifiable {
     let id: UUID = UUID()
     let firstName: String
     let lastName: String
@@ -27,8 +27,8 @@ struct ContentView: View {
     var body: some View {
         NavigationView {
             List {
-                ForEach(users, id: \.self) { user in
-                    Text(user.firstName)
+                ForEach(users) { user in
+                    Text("\(user.firstName) \(user.lastName)")
                 }
                 .onMove { (indexSet, destination) in
                      self.users.move(fromOffsets: indexSet, toOffset: destination)
@@ -39,9 +39,9 @@ struct ContentView: View {
         }
     }
 
-    func move(offset: IndexSet, destination: Int) {
-        self.users.move(fromOffsets: offset, toOffset: destination)
-    }
+//    func move(offset: IndexSet, destination: Int) {
+//        self.users.move(fromOffsets: offset, toOffset: destination)
+//    }
 }
 
 #if DEBUG
