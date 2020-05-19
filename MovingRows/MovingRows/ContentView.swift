@@ -30,18 +30,16 @@ struct ContentView: View {
                 ForEach(users) { user in
                     Text("\(user.firstName) \(user.lastName)")
                 }
-                .onMove { (indexSet, destination) in
-                     self.users.move(fromOffsets: indexSet, toOffset: destination)
-                }
+                .onMove(perform: move)
             }
             .navigationBarItems(trailing: EditButton())
             .navigationBarTitle("Move rows")
         }
     }
 
-//    func move(offset: IndexSet, destination: Int) {
-//        self.users.move(fromOffsets: offset, toOffset: destination)
-//    }
+    func move(from source: IndexSet, to destination: Int) {
+        users.move(fromOffsets: source, toOffset: destination)
+    }
 }
 
 #if DEBUG
