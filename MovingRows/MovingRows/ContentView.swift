@@ -18,6 +18,12 @@ struct ContentView: View {
                 ForEach(items, id: \.self) { item in
                     Text(item)
                 }
+                .onDelete(perform: { (offset: IndexSet) in
+                    guard let firstIndexSet = offset.first else {
+                        return
+                    }
+                    self.items.remove(at: firstIndexSet)
+                })
                 .onMove { (indexSet, offset) in
                     self.items.move(fromOffsets: indexSet, toOffset: offset)
                 }
@@ -28,8 +34,10 @@ struct ContentView: View {
     }
 }
 
+#if DEBUG
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
         ContentView()
     }
 }
+#endif
