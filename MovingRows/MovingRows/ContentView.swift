@@ -8,29 +8,46 @@
 
 import SwiftUI
 
-struct ContentView: View {
-    @State private var items = ["Item #1", "Item #2", "Item #3", "Item #4"]
+struct User: Hashable {
+    let id: UUID = UUID()
+    let firstName: String
+    let lastName: String
+}
 
+struct ContentView: View {
+    @State private var users = [
+        User(firstName: "Tom", lastName: "Thumb"),
+        User(firstName: "Alex", lastName: "Riley"),
+        User(firstName: "Sarah", lastName: "Connor"),
+        User(firstName: "Will", lastName: "Smith"),
+        User(firstName: "Anjali", lastName: "Tzlk"),
+        User(firstName: "Hans", lastName: "Gruber")
+    ]
 
     var body: some View {
         NavigationView {
             List {
-                ForEach(items, id: \.self) { item in
-                    Text(item)
+                ForEach(users, id: \.self) { user in
+                    Text(user.firstName)
                 }
+                .onMove { (indexSet, destination) in
+                     self.users.move(fromOffsets: indexSet, toOffset: destination)
+                }
+
 //                .onDelete(perform: { (offset: IndexSet) in
 //                    guard let firstIndexSet = offset.first else {
 //                        return
 //                    }
 //                    self.items.remove(at: firstIndexSet)
 //                })
-                .onMove { (indexSet, offset) in
-                    self.items.move(fromOffsets: indexSet, toOffset: offset)
-                }
             }
             .navigationBarItems(trailing: EditButton())
             .navigationBarTitle("Move rows")
         }
+    }
+
+    func move(offset: IndexSet, destination: Int) {
+        self.users.move(fromOffsets: offset, toOffset: destination)
     }
 }
 
